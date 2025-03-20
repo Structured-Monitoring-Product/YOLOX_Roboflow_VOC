@@ -198,7 +198,9 @@ class VOCDetection(Dataset):
                 for im_ind, index in enumerate(self.ids):
                     index = index[1]
                     dets = all_boxes[cls_ind][im_ind]
-                    if dets == []:
+                    if isinstance(dets, list) and len(dets) == 0:
+                        continue
+                    if isinstance(dets, np.ndarray) and (dets.size == 0 or dets.shape[0] == 0):
                         continue
                     for k in range(dets.shape[0]):
                         f.write(
